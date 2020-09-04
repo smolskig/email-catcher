@@ -5,7 +5,6 @@ import pandas as pd
 import xlsxwriter
 import time
 
-lista = []
 lastPage = '1'
 maxRange = None
 
@@ -53,9 +52,12 @@ def pegaEmail(content):
   return filteredEmails
 
 def startFunc():
+  global lista
   global state
   global pageNumber
+
   count = 0
+  lista = []
   
   state = input('[ Insira o estado ] :').upper()
 
@@ -70,7 +72,7 @@ def startFunc():
     lista.append(requisitarDados(pageNumber,False))
     count = count + 1
     
-    if count == 5:
+    if count == 100:
       print('-----')
       processData(pageNumber)
       count = 0
@@ -92,6 +94,7 @@ def processData(pag):
   data.to_excel(dataToExcel, sheet_name="emails-mesmo")
   dataToExcel.save()
   print('Excel Processado pag: ' + str(pag))
+  lista = []
 
 
 startFunc()
